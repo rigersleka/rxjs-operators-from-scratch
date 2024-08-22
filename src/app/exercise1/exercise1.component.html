@@ -1,0 +1,38 @@
+<!--* Exercise 1:
+       Requirements 1: Create 2 dropdowns. One dropdown that have a list of continents and another one that
+       have a list of countries.
+       Requirements 2: User select first dropdown (continent), automatically the second dropdown should be populated
+      with the countries of only that continent.
+
+      Technology hint:
+        a) Fetch an array object by subscribing link online
+        b) display data in the screen by 3 Observables, 3 subscriptions
+
+       Solution Reference: https://stackblitz.com/edit/at-rxjs-demo2?file=src%2Fapp%2Fapp.component.ts
+-->
+<div>
+
+  <!--* Solve 1 (BEST): Fire Observable via ASYNC, instead of subscribe into constructor -->
+  <select [formControl]="continentSelect">
+    <option *ngFor="let option of (country$ | async) as countries">
+      {{option.continent}}
+    </option>
+  </select>
+  <!--* Solve 2
+  <select [formControl]="continentSelect">
+    <option *ngFor="let option of countries">
+      {{option.continent}}
+    </option>
+   </select> -->
+
+  <select [formControl]="countrySelect">
+    <option *ngFor="let option of countries">
+      {{ option.country }}
+    </option>
+  </select>
+  <p>
+    <!--* Solution 1: Use tap() to register data in controller -->
+    You selected: {{continentSelection$ | async}} - {{countrySelect.valueChanges| async}}
+    <!--* Solution 2: Use subscribe( in controller {{currentCountry}} -->
+  </p>
+</div>
