@@ -1,0 +1,29 @@
+<!-- * Exercise 2:
+      Requirements
+        User select first dropdown (continent), automatically the second dropdown should be populated
+      with the countries of only that continent.
+
+        Technical hint:
+          a) Good technique: Use ASYNC into template to subscribe Observable instead of .subscribe()
+          b) Suppose that now have Form in Real Exercise (use FormBuilder/FormGroup, FormControl etc...)
+          c) Filter out the list of displayed countries based on the selected continent
+          d) Reset the country selection when a new continent is selected
+        BONUS! Use rxjs operators, and don't use subscribe()
+-->
+<div>
+  <form [formGroup]="selectionForm">
+    <select formControlName="continentSelect">
+      <option *ngFor="let option of country$ | async">
+        {{option.continent}}
+      </option>
+    </select>
+    <select formControlName="countrySelect">
+      <option *ngFor="let option of countries">
+        {{option.country}}
+      </option>
+    </select>
+    <div>
+      You have selected {{continent$ | async}} - {{currentCountry$ | async}}
+    </div>
+  </form>
+</div>
