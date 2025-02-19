@@ -9,28 +9,48 @@
        Solution Reference: https://stackblitz.com/edit/at-rxjs-demo2?file=src%2Fapp%2Fapp.component.ts
 -->
 <div>
-
-  <!--* Solve 1 (BEST): Fire Observable via ASYNC, instead of subscribe into constructor -->
+  <!-- HARD-CODED
+    <select [formControl]="continentSelect">
+      <option>North America</option>
+      <option>South Africa</option>
+      <option>Europe</option>
+    </select>
+  -->
+  <!--*  BEST-Solution 1: Fire Observable via ASYNC, instead of subscribe into constructor -->
   <select [formControl]="continentSelect">
-    <option *ngFor="let option of (country$ | async) as countries">
+    <option *ngFor="let option of (country$ | async)">
       {{option.continent}}
     </option>
   </select>
-  <!--* Solve 2
+  <select [formControl]="countrySelect">
+    <option *ngFor="let option of (country$ | async)">
+      {{option.country}}
+    </option>
+  </select>
+
+  <p>
+    <!--* Solution 1: Use tap() to register data in controller -->
+    You selected: {{continentSelection$ | async}} - {{countrySelection$ | async}}
+    <!--* Solution 2: Use subscribe( in controller {{currentCountry}} -->
+  </p>
+
+  <!--* Solution 2 (old way: avoid)
   <select [formControl]="continentSelect">
     <option *ngFor="let option of countries">
       {{option.continent}}
     </option>
-   </select> -->
+   </select>
 
-  <select [formControl]="countrySelect">
+   <select [formControl]="continentSelect">
+    <option *ngFor="let option of countries">
+      {{option.continent}}
+    </option>
+  </select>
+
+    <select [formControl]="countrySelect">
     <option *ngFor="let option of countries">
       {{ option.country }}
     </option>
   </select>
-  <p>
-    <!--* Solution 1: Use tap() to register data in controller -->
-    You selected: {{continentSelection$ | async}} - {{countrySelect.valueChanges| async}}
-    <!--* Solution 2: Use subscribe( in controller {{currentCountry}} -->
-  </p>
+ -->
 </div>
