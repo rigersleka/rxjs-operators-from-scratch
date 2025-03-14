@@ -1,7 +1,7 @@
 import { CommonModule, NgFor } from '@angular/common';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Observable, map, tap } from 'rxjs';
 
 export interface Country {
@@ -29,12 +29,14 @@ export class Exercise1Component {
   countrySelect = new FormControl()
 
   //* Solution 2: (old way: avoid) fill data by subscribing the url, use it in template by using *ngFor
-  countries: Country[] = []
-  currentCountry: string = ''
-  currentContinent: string = ''
+  /*
+    countries: Country[] = []
+    currentCountry: string = ''
+    currentContinent: string = ''
+  */
 
   constructor() {
-    //* BEST-Solution 1: Benefits of using tap: register some data & fire using ASYNC at template
+    //* BEST-Solution 1: Benefits of using tap: a) Register Data b) SPY (log/catch data) - console.log()
     this.continentSelection$ = this.continentSelect.valueChanges // Observable of the latest continent selected
       .pipe(
         tap((continent: string) => console.log(continent)),
@@ -43,6 +45,7 @@ export class Exercise1Component {
       .pipe(tap((country: string) => country))
 
     //* Solution 2: old way (the new one ASYNC directly at TEMPLATE)
+    /*
     this.country$
       .subscribe((data: Country[]) => {
         console.log(data)
@@ -52,6 +55,7 @@ export class Exercise1Component {
       .subscribe((newValue: string) => this.currentContinent = newValue)
     this.countrySelect.valueChanges
       .subscribe((newValue: string) => this.currentCountry = newValue)
+    */
   }
 }
 

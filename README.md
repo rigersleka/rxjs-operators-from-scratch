@@ -33,5 +33,11 @@ https://docs.google.com/presentation/d/1jvYM8jXXPBN0-SnGPqh2IcDCehcTlDa_vWQh9jeu
 - How can use .subscribe() ?
 Reference: https://stackblitz.com/edit/at-rxjs-demo1?embed=1&file=src%2Fapp%2Fapp.component.html,src%2Fapp%2Fapp.component.ts
 
+- How to console.log() an Observable$ that is .subscribe() from template using pipe async?
+Use pipe json. In template: <pre>{{( (observable$ | async) | json) }}</pre>
+
+-What is best Operators Website to explain most important operators with diagrams? 
+https://rxmarbles.com/
+
 - Exercise 1: 
 Reference: https://stackblitz.com/edit/at-rxjs-demo2?file=src%2Fapp%2Fapp.component.ts
