@@ -32,12 +32,12 @@ Implement automatic population of the country dropdown based on the selected con
 <div>
   <!--*  BEST-Solution 1: Fire Observable via ASYNC, instead of subscribe into constructor -->
   <!-- Debug with JSON <pre>{{ (country$ | async) | json }}</pre> -->
-  <select [formControl]="continentSelect">
+  <select [formControl]="continentSelectCtrl">
     <option *ngFor="let option of (country$ | async)">
       {{option.continent}}
     </option>
   </select>
-  <select [formControl]="countrySelect">
+  <select [formControl]="countrySelectCtrl">
     <option *ngFor="let option of (country$ | async)">
       {{option.country}}
     </option>

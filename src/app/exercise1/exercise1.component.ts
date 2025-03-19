@@ -1,8 +1,8 @@
 import { CommonModule, NgFor } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Observable, map, tap } from 'rxjs';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Observable, map, tap, withLatestFrom } from 'rxjs';
 
 export interface Country {
   country: string;
@@ -19,14 +19,19 @@ export interface Country {
 export class Exercise1Component {
   private COUNTRY_URL: string = `https://raw.githubusercontent.com/samayo/country-json/master/src/country-by-continent.json` // static data
   private http = inject(HttpClient)
+  private fb = inject(FormBuilder)
 
-  //TODO: (look powerpoint slide 14) HTTP request to get the data could be created in another Service
   country$: Observable<Country[]> = this.http.get<Country[]>(this.COUNTRY_URL)   // Observable of country data
   continentSelection$: Observable<string>
-  countrySelection$: Observable<string>
+  countrySelection$: Observable<string | null>
 
-  continentSelect = new FormControl() // formControlName in the template
-  countrySelect = new FormControl()
+  continentSelectCtrl: FormControl<string | null> = this.fb.control<string>('', Validators.required)
+  countrySelectCtrl: FormControl<string | null> = this.fb.control<string>('', Validators.required)
+  selectionForm: FormGroup = this.fb.group({
+    continentSelect: this.continentSelectCtrl,
+    countrySelect: this.countrySelectCtrl
+  })
+  countries: Country[] = []
 
   //* Solution 2: (old way: avoid) fill data by subscribing the url, use it in template by using *ngFor
   /*
@@ -37,12 +42,47 @@ export class Exercise1Component {
 
   constructor() {
     //* BEST-Solution 1: Benefits of using tap: a) Register Data b) SPY (log/catch data) - console.log()
-    this.continentSelection$ = this.continentSelect.valueChanges // Observable of the latest continent selected
-      .pipe(
-        tap((continent: string) => console.log(continent)),
-        map((continent: string) => continent.substring(0, 3).toUpperCase()))
-    this.countrySelection$ = this.countrySelect.valueChanges // Observable of the latest country selected
-      .pipe(tap((country: string) => country))
+    // Implement automatic population of the country dropdown based on the selected continent.
+    this.continentSelection$ = this.continentSelectCtrl.valueChanges.pipe(
+      // Observable of the latest continent selected
+      tap(console.log),
+
+      // Combine continent selection with the latest list of countries from the HTTP request
+      withLatestFrom(this.country$),
+
+      // Transform the data into an array containing the selected continent and filtered countries
+      map(([continent, countries]) => [
+        continent, // Keep the selected continent as is
+        countries.filter((c) => c.continent === continent), // Filter countries based on the selected continent
+      ]),
+
+      // Log transformed data for debugging
+      tap((data) => console.log('Filtered countries:', data)),
+
+      // Use tap() to assign filtered countries to the component property
+      tap(([continent, filteredCountries]) => {
+        this.countries = filteredCountries; // Update the dropdown options
+        this.countrySelectCtrl.setValue(filteredCountries[0].country); // Auto-select the first country, when change continent
+      }),
+
+      // Convert the selected continent into a 3-letter uppercase string
+      map(([continent, country]) => continent.substring(0, 3).toUpperCase())
+
+      // No need to subscribe manually; async pipe handles it in the template
+    );
+
+    /*
+      this.continentSelection$ = this.continentSelectCtrl.valueChanges.pipe(
+        tap(a => console.log(a)),
+      Javascript trick to convert a value into a boolean !!
+        filter((continent): continent is string => !!continent),
+        map((continent) => continent.substring(0, 3).toUpperCase())
+    )
+    */
+
+    this.countrySelection$ = this.countrySelectCtrl.valueChanges.pipe(
+      tap(a => console.log("country selected", a)) // Log country selection for debugging
+    );
 
     //* Solution 2: old way (the new one ASYNC directly at TEMPLATE)
     /*
@@ -61,6 +101,7 @@ export class Exercise1Component {
 
 /**
   Note!
-  Best way how to be declared a FormGroup/FormControl or FormBuilder/FormControl
-  is in the exercise 4.
+   Instead of FormBuilder injection can use: new FormGroup({ ....})
+   continentSelect = new FormControl() // formControlName in the template
+  countrySelect = new FormControl()
  */
