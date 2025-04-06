@@ -33,8 +33,7 @@ export class Exercise1Component {
   })
   countries: Country[] = []
 
-  //* Solution 2: (old way: avoid) fill data by subscribing the url, use it in template by using *ngFor
-  /*
+  /* Solution 2: (old way: avoid) fill data by subscribing the url, use it in template by using *ngFor
     countries: Country[] = []
     currentCountry: string = ''
     currentContinent: string = ''
@@ -71,6 +70,7 @@ export class Exercise1Component {
       // No need to subscribe manually; async pipe handles it in the template
     );
 
+    //* Solution 1 without automatic population of the country dropdown */
     /*
       this.continentSelection$ = this.continentSelectCtrl.valueChanges.pipe(
         tap(a => console.log(a)),

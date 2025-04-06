@@ -27,7 +27,7 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
 
-# RxJS from Scratch - SLIDE
+# RxJS from Scratch - POWERPOINT-SLIDE
 https://docs.google.com/presentation/d/1jvYM8jXXPBN0-SnGPqh2IcDCehcTlDa_vWQh9jeuJ2c/edit?pli=1#slide=id.gfdbc511df0_0_104
 
 - How can use .subscribe() ?
@@ -41,3 +41,4 @@ https://rxmarbles.com/
 
 - Exercise 1: 
 Reference: https://stackblitz.com/edit/at-rxjs-demo2?file=src%2Fapp%2Fapp.component.ts
+3- How to emit data with RxJs? Create my own service which can get data using RxJs
