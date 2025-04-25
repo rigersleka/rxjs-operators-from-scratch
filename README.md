@@ -39,6 +39,39 @@ Use pipe json. In template: <pre>{{( (observable$ | async) | json) }}</pre>
 -What is best Operators Website to explain most important operators with diagrams? 
 https://rxmarbles.com/
 
-- Exercise 1: 
+# Exercise 1: Dynamic Dropdowns using RxJS and ValueChanges
 Reference: https://stackblitz.com/edit/at-rxjs-demo2?file=src%2Fapp%2Fapp.component.ts
+
+Objective:
+- Create two dropdowns—one for continents and another for countries.
+- When Continent is selected -  display the 3characters of the selected continents, when country is selected
+display the selected country
+
+-Improvements: The country dropdown should dynamically update based on the selected continent.
+
+Requirements:
+Dropdown Implementation:
+
+1. - Create a dropdown containing a list of continents.
+   - Create a second dropdown containing a list of countries.
+2.Fetching Data:
+   - Use http.get to fetch an array of objects (country-continent data).
+   - Subscribe to the data stream using Observable$ | async to populate the dropdowns.
+3.Handling Selections:
+
+   - Use ValueChanges to display the selected continent and country.
+   - When the user selects a continent, the second dropdown should be automatically populated with the countries belonging to that continent.
+
+4.   Technical Hints:
+Use Angular’s HttpClient to fetch data asynchronously.
+Leverage FormControl and ValueChanges for reactive form handling.
+Filter the list of countries dynamically based on the selected continent.
+
+5. TODO (Enhancement):
+Implement automatic population of the country dropdown based on the selected continent.
+
+* BONUS points if you can remove all calls to .subscribe()
+
+# Exercise 2: TODO: Write the title
+Reference: https://stackblitz.com/edit/at-rxjs-demo5?file=src%2Fapp%2Fapp.component.html
 3- How to emit data with RxJs? Create my own service which can get data using RxJs

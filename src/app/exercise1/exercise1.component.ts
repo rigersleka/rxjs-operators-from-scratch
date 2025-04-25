@@ -4,10 +4,8 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Observable, map, tap, withLatestFrom } from 'rxjs';
 
-export interface Country {
-  country: string;
-  continent: string;
-}
+import { Country } from '../country.interface';
+
 @Component({
   selector: 'exercise1',
   standalone: true,
