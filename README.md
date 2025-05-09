@@ -74,4 +74,10 @@ Implement automatic population of the country dropdown based on the selected con
 
 # Exercise 2: TODO: Write the title
 Reference: https://stackblitz.com/edit/at-rxjs-demo5?file=src%2Fapp%2Fapp.component.html
-3- How to emit data with RxJs? Create my own service which can get data using RxJs
+- How to emit data with RxJs? 
+Create my own service which can get data using RxJs - CountryService
+It's get/set methods in that Service
+
+- How to create a function that subscribe to a face mock array-object to retrieve the data? 
+Mock data retrieval via getCountryList(). Reactive updates through Observable.
+
