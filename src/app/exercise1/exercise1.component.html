@@ -4,16 +4,18 @@
 <div>
   <!--*  BEST-Solution 1: Fire Observable via ASYNC, instead of subscribe into constructor -->
   <!-- Debug with JSON <pre>{{ (country$ | async) | json }}</pre> -->
-  <select [formControl]="continentSelectCtrl">
-    <option *ngFor="let option of (country$ | async)">
-      {{option.continent}}
-    </option>
-  </select>
-  <select [formControl]="countrySelectCtrl">
-    <option *ngFor="let option of (country$ | async)">
-      {{option.country}}
-    </option>
-  </select>
+  <form [formGroup]="selectionForm">
+    <select [formControl]="continentSelectCtrl">
+      <option *ngFor="let option of (country$ | async)">
+        {{option.continent}}
+      </option>
+    </select>
+    <select [formControl]="countrySelectCtrl">
+      <option *ngFor="let option of countries">
+        {{option.country}}
+      </option>
+    </select>
+  </form>
 
   <p>
     <!--* Solution 1: Use tap() to register data in controller -->
@@ -40,11 +42,5 @@
     </option>
   </select>
  -->
-   <!--* Solution 3: HARD-CODED
-    <select [formControl]="continentSelect">
-      <option>North America</option>
-      <option>South Africa</option>
-      <option>Europe</option>
-    </select>
-  -->
+
 </div>

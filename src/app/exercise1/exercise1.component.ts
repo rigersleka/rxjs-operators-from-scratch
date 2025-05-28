@@ -1,7 +1,7 @@
 import { CommonModule, NgFor } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Observable, map, tap, withLatestFrom } from 'rxjs';
 
 import { Country } from '../country.interface';
@@ -41,31 +41,25 @@ export class Exercise1Component {
     //* BEST-Solution 1: Benefits of using tap: a) Register Data b) SPY (log/catch data) - console.log()
     // Implement automatic population of the country dropdown based on the selected continent.
     this.continentSelection$ = this.continentSelectCtrl.valueChanges.pipe(
-      // Observable of the latest continent selected
       tap(console.log),
-
       // Combine continent selection with the latest list of countries from the HTTP request
       withLatestFrom(this.country$),
 
       // Transform the data into an array containing the selected continent and filtered countries
       map(([continent, countries]) => [
         continent, // Keep the selected continent as is
-        countries.filter((c) => c.continent === continent), // Filter countries based on the selected continent
+        countries.filter((c) => c.continent === continent),
       ]),
 
-      // Log transformed data for debugging
-      tap((data) => console.log('Filtered countries:', data)),
+      tap((data) => console.log('FILTERED COUNTRIES:', data)),
 
-      // Use tap() to assign filtered countries to the component property
       tap(([continent, filteredCountries]) => {
-        this.countries = filteredCountries; // Update the dropdown options
-        this.countrySelectCtrl.setValue(filteredCountries[0].country); // Auto-select the first country, when change continent
+        this.countries = filteredCountries;
+        this.countrySelectCtrl.setValue(filteredCountries[0].country)
       }),
 
       // Convert the selected continent into a 3-letter uppercase string
       map(([continent, country]) => continent.substring(0, 3).toUpperCase())
-
-      // No need to subscribe manually; async pipe handles it in the template
     );
 
     //* Solution 1 without automatic population of the country dropdown */
@@ -79,7 +73,7 @@ export class Exercise1Component {
     */
 
     this.countrySelection$ = this.countrySelectCtrl.valueChanges.pipe(
-      tap(a => console.log("country selected", a)) // Log country selection for debugging
+      tap(a => console.log("COUNTRY SELECTED:", a)) // Log country selection for debugging
     );
 
     //* Solution 2: old way (the new one ASYNC directly at TEMPLATE)
@@ -97,8 +91,7 @@ export class Exercise1Component {
   }
 }
 
-/**
-  Note!
+/** Note!
    Instead of FormBuilder injection can use: new FormGroup({ ....})
    continentSelect = new FormControl() // formControlName in the template
   countrySelect = new FormControl()
