@@ -2,7 +2,7 @@ import { CommonModule, NgFor } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Observable, map, tap, withLatestFrom } from 'rxjs';
+import { Observable, distinctUntilChanged, map, tap, withLatestFrom } from 'rxjs';
 
 import { Country } from '../country.interface';
 
@@ -41,6 +41,7 @@ export class Exercise1Component {
     //* BEST-Solution 1: Benefits of using tap: a) Register Data b) SPY (log/catch data) - console.log()
     // Implement automatic population of the country dropdown based on the selected continent.
     this.continentSelection$ = this.continentSelectCtrl.valueChanges.pipe(
+      distinctUntilChanged(), // filter out repeated values
       tap(console.log),
       // Combine continent selection with the latest list of countries from the HTTP request
       withLatestFrom(this.country$),
@@ -48,7 +49,7 @@ export class Exercise1Component {
       // Transform the data into an array containing the selected continent and filtered countries
       map(([continent, countries]) => [
         continent, // Keep the selected continent as is
-        countries.filter((c) => c.continent === continent),
+        countries.filter((c: Country) => c.continent === continent),
       ]),
 
       tap((data) => console.log('FILTERED COUNTRIES:', data)),
@@ -62,16 +63,6 @@ export class Exercise1Component {
       map(([continent, country]) => continent.substring(0, 3).toUpperCase())
     );
 
-    //* Solution 1 without automatic population of the country dropdown */
-    /*
-      this.continentSelection$ = this.continentSelectCtrl.valueChanges.pipe(
-        tap(a => console.log(a)),
-      Javascript trick to convert a value into a boolean !!
-        filter((continent): continent is string => !!continent),
-        map((continent) => continent.substring(0, 3).toUpperCase())
-    )
-    */
-
     this.countrySelection$ = this.countrySelectCtrl.valueChanges.pipe(
       tap(a => console.log("COUNTRY SELECTED:", a)) // Log country selection for debugging
     );
@@ -81,8 +72,8 @@ export class Exercise1Component {
     this.country$
       .subscribe((data: Country[]) => {
         console.log(data)
-        return this.countries = data
-      })  // emit observable and give Country Data
+        return this.countries = data // emit observable and give Country Data
+      })
     this.continentSelect.valueChanges
       .subscribe((newValue: string) => this.currentContinent = newValue)
     this.countrySelect.valueChanges

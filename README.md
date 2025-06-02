@@ -14,8 +14,20 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 https://docs.google.com/presentation/d/1jvYM8jXXPBN0-SnGPqh2IcDCehcTlDa_vWQh9jeuJ2c/edit?pli=1#slide=id.gfdbc511df0_0_104
 
 Learning by answering different questions:
+- What is RxJS(reactiveX for Javascript)? 
+
+- Where we use Observables? Url_browsers, Form Input value, Http request completes
+
 - How can use .subscribe() ?
 Reference: https://stackblitz.com/edit/at-rxjs-demo1?embed=1&file=src%2Fapp%2Fapp.component.html,src%2Fapp%2Fapp.component.ts
+
+-What is valueChanges?
+
+- What is HttClient?
+
+- What is Operators? .pipe() etc...
+
+- What is Tap and which are the real benefits of it?
 
 - How to console.log() an Observable$ that is .subscribe() from template using pipe async?
 Use pipe json. In template: <pre>{{( (observable$ | async) | json) }}</pre>
