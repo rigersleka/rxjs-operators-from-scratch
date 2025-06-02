@@ -30,7 +30,7 @@ export class Exercise1Component {
     countrySelect: this.countrySelectCtrl
   })
   countries: Country[] = []
-
+  continents$: Observable<string[]>
   /* Solution 2: (old way: avoid) fill data by subscribing the url, use it in template by using *ngFor
     countries: Country[] = []
     currentCountry: string = ''
@@ -38,6 +38,10 @@ export class Exercise1Component {
   */
 
   constructor() {
+    this.continents$ = this.country$.pipe(
+      map(continents => [...new Set(continents.map(c => c.continent))])
+    );
+
     //* BEST-Solution 1: Benefits of using tap: a) Register Data b) SPY (log/catch data) - console.log()
     // Implement automatic population of the country dropdown based on the selected continent.
     this.continentSelection$ = this.continentSelectCtrl.valueChanges.pipe(
@@ -47,20 +51,20 @@ export class Exercise1Component {
       withLatestFrom(this.country$),
 
       // Transform the data into an array containing the selected continent and filtered countries
-      map(([continent, countries]) => [
-        continent, // Keep the selected continent as is
-        countries.filter((c: Country) => c.continent === continent),
+      map(([selectedContinent, allCountries]) => [
+        selectedContinent, // Keep the selected continent as is
+        allCountries.filter((c: Country) => c.continent === selectedContinent),
       ]),
 
       tap((data) => console.log('FILTERED COUNTRIES:', data)),
 
-      tap(([continent, filteredCountries]) => {
+      tap(([_, filteredCountries]) => {
         this.countries = filteredCountries;
         this.countrySelectCtrl.setValue(filteredCountries[0].country)
       }),
 
       // Convert the selected continent into a 3-letter uppercase string
-      map(([continent, country]) => continent.substring(0, 3).toUpperCase())
+      map(([continent, _]) => continent.substring(0, 3).toUpperCase())
     );
 
     this.countrySelection$ = this.countrySelectCtrl.valueChanges.pipe(

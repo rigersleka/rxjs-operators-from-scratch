@@ -4,8 +4,8 @@
   <!-- Debug with JSON <pre>{{ (country$ | async) | json }}</pre> -->
   <form [formGroup]="selectionForm">
     <select [formControl]="continentSelectCtrl">
-      <option *ngFor="let option of (country$ | async)">
-        {{option.continent}}
+      <option *ngFor="let option of (continents$ | async)">
+        {{option}}
       </option>
     </select>
     <select [formControl]="countrySelectCtrl">
