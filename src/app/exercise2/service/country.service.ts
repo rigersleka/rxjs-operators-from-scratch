@@ -22,8 +22,4 @@ export class CountryService {
   getCountryList(): Observable<Country[]> {
     return of(countries)
   }
-
-  /* Second solution to trigger data
-    export const countryList$: Observable<Array<Country>> = of(countries)
-  */
 }

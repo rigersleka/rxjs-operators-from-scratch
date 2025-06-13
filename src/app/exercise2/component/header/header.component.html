@@ -1,8 +1,8 @@
+<h2>Exercise 2</h2>
 <div>
-  <h2>Header Component</h2>
+  <h4>Component 1</h4>
   <h4>Select Country</h4>
-  <button *ngFor="let country of countriesStore"
-          (click)="countryService.setCurrentCountry(country)">
+  <button *ngFor="let country of countriesStore" (click)="onCountrySelected(country)">
     {{country.country}}
   </button>
 </div>

@@ -1,4 +1,10 @@
-<h3>Exercise 2</h3>
+<!-- <h3>Exercise 2</h3> -->
 
 <header></header>
-<card></card>
+
+<card *ngFor="let card of cards; index as i" [index]="i+1">
+</card>
+
+<br />&nbsp;<br />
+<button (click)="cards.push('')">Add another CARD component</button>
+<button (click)="cards = []">Remove all Cards</button>

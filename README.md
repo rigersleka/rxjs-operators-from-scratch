@@ -32,10 +32,26 @@ Reference: https://stackblitz.com/edit/at-rxjs-demo1?embed=1&file=src%2Fapp%2Fap
 - How to console.log() an Observable$ that is .subscribe() from template using pipe async?
 Use pipe json. In template: <pre>{{( (observable$ | async) | json) }}</pre>
 
+- How to console.log() inside of pipe() operator?
+Observable$.pipe( tap(console.log) )
+So we can use tap(console.log) after each line so we can track what changes have been made there.
+
 -What is best Operators Website to explain most important RXjs operators with diagrams? 
 https://rxmarbles.com/
 
 -What is importance of tap()? Debugging (as a spy) and to register data 
+
+- How can we retrieve unique values and convert it into an array?
+Remember continent dropdown in the exercise 1: [...net Set(...)]
+
+- How to emit data with RxJs? 
+Create my own service which can get data using RxJs - CountryService
+get/set methods created in that Service
+You can created your own custom Observable, but most of the time all your needs can be from some ready Observables like: 
+ReplySubject(), Subject()
+
+- How can we expose a Subject (special observable) into an Observable?
+subject.asObservable().subscribe(.....)
 
 # Exercise 1: Dynamic Dropdowns using RxJS and ValueChanges
 Reference: 
@@ -70,9 +86,6 @@ Implement automatic population of the country dropdown based on the selected con
 
 # Exercise 2: TODO: Write the title
 Reference: https://stackblitz.com/edit/at-rxjs-demo5?file=src%2Fapp%2Fapp.component.html
-- How to emit data with RxJs? 
-Create my own service which can get data using RxJs - CountryService
-get/set methods created in that Service
 
 - How to create a function that subscribe to a face mock array-object to retrieve the data? 
 Mock data retrieval via getCountryList(). Reactive updates through Observable.

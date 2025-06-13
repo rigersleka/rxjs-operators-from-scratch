@@ -26,4 +26,8 @@ export class HeaderComponent {
         }))
       .subscribe((countriesResponse: Country[]) => (this.countriesStore = countriesResponse))
   }
+
+  onCountrySelected(country: Country): void {
+    this.countryService.setCurrentCountry(country)
+  }
 }

@@ -1,7 +1,7 @@
 import { CommonModule, NgFor } from '@angular/common';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Observable, distinctUntilChanged, map, tap, withLatestFrom } from 'rxjs';
 
 import { Country } from '../country.interface';
@@ -39,6 +39,9 @@ export class Exercise1Component {
 
   constructor() {
     this.continents$ = this.country$.pipe(
+      /* Performant and concise to get unique values
+        "Set" stores only unique values and [...new Set()] converts into an array
+      */
       map(continents => [...new Set(continents.map(c => c.continent))])
     );
 
